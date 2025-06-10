@@ -8,3 +8,5 @@ services:
     volumes:
       - ./models:/models
     restart: unless-stopped
+    command: ["./build/bin/llama-server", "-m", "/models/model.gguf", "--port", "8082", "--host", "0.0.0.0"]
+
