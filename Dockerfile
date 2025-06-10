@@ -11,9 +11,11 @@ WORKDIR /app
 # Clone llama.cpp
 RUN git clone https://github.com/ggerganov/llama.cpp.git .
 
-# Build with CMake (server mode)
-RUN mkdir build && cd build && cmake .. -DLLAMA_BUILD_SERVER=ON && cmake --build . --config Release
+# Create build directory
+WORKDIR /app/build
 
-EXPOSE 8082
+# Configure and build server
+RUN cmake .. -DLLAMA_BUILD_SERVER=ON && cmake --build . --config Release
 
-CMD ["./build/bin/server", "-m", "/models/model.gguf", "--port", "8082"]
+# Set correct CMD
+CMD ["./server", "-m", "/models/model.gguf", "--port", "8082"]
