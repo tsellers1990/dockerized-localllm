@@ -8,14 +8,13 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Clone llama.cpp
+# Clone llama.cpp source code
 RUN git clone https://github.com/ggerganov/llama.cpp.git .
 
-# Create build directory
-WORKDIR /app/build
+# Build the server binary inside the container
+RUN mkdir build && cd build && cmake .. -DLLAMA_BUILD_SERVER=ON && cmake --build . --config Release
 
-# Configure and build server
-RUN cmake .. -DLLAMA_BUILD_SERVER=ON && cmake --build . --config Release
+EXPOSE 8082
 
-# Set correct CMD
-CMD ["./server", "-m", "/models/model.gguf", "--port", "8082"]
+# Start the llama server binary built inside ./build/bin/server
+CMD ["./build/bin/server", "-m", "/models/model.gguf", "--port", "8082"]
