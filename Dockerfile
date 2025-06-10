@@ -11,6 +11,8 @@ WORKDIR /app
 # Clone llama.cpp
 RUN git clone https://github.com/ggerganov/llama.cpp.git .
 
+COPY ./build/bin/server /build/bin/server
+
 # Build with CMake (server mode)
 RUN mkdir build && cd build && cmake .. -DLLAMA_BUILD_SERVER=ON && cmake --build . --config Release
 
