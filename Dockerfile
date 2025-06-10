@@ -17,4 +17,4 @@ RUN mkdir build && cd build && cmake .. -DLLAMA_BUILD_SERVER=ON && cmake --build
 EXPOSE 8082
 
 # Start the llama server binary built inside ./build/bin/server
-CMD ["./build/bin/server", "-m", "/models/model.gguf", "--port", "8082"]
+CMD ["./build/bin/llama-server", "-m", "/models/model.gguf", "--port", "8082"]
